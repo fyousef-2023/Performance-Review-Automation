@@ -80,6 +80,25 @@ ul.pts li b{color:var(--text)}
 .tl-item h3{font-size:14.5px;margin-bottom:3px}
 .tl-item p{margin:0;font-size:13.5px;color:var(--dim)}
 
+.flow{display:flex;flex-direction:column;align-items:stretch;gap:0;max-width:620px;margin:4px auto 0}
+.flow-step{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:11px 16px;text-align:center}
+.flow-step b{display:block;font-size:13px;color:var(--text)}
+.flow-step span.sub{display:block;font-size:11px;color:var(--faint);font-family:'IBM Plex Mono',monospace;direction:ltr;unicode-bidi:isolate;margin-top:3px}
+.flow-step.trig{background:var(--purple-tint);border-color:transparent}
+.flow-step.trig b{color:var(--purple-ink)}
+.flow-arrow{align-self:center;width:1.5px;height:18px;background:var(--border);position:relative}
+.flow-arrow::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--border)}
+.flow-decision{background:var(--warn-tint);border-color:transparent}
+.flow-decision b{color:var(--warn)}
+.flow-branches{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
+.flow-branch{border-radius:12px;overflow:hidden;border:1.5px solid var(--border)}
+.flow-branch .tag{font:700 11px 'IBM Plex Mono',monospace;text-align:center;padding:3px;direction:ltr}
+.flow-branch.yes .tag{background:var(--ok-tint);color:var(--ok)}
+.flow-branch.no .tag{background:var(--bad-tint);color:var(--bad)}
+.flow-branch .txt{background:var(--surface);padding:10px 12px;font-size:12px;color:var(--dim);text-align:center;min-height:52px;display:flex;align-items:center;justify-content:center}
+.flow-merge{align-self:center;font-size:10.5px;color:var(--faint);font-family:'IBM Plex Mono',monospace;margin:2px 0}
+@media (max-width:560px){.flow-branches{grid-template-columns:1fr}}
+
 .res-group{margin-top:14px}
 .res-group h3{font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:8px}
 .res-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
@@ -205,6 +224,56 @@ footer{text-align:center;font-size:12px;color:var(--faint);padding-top:20px;bord
       <h3><span data-l="ar">مرجع</span><span data-l="en">Reference</span></h3>
       <div class="res-grid">
         <a class="res" href="https://www.awesomescreenshot.com/video/40244341?key=2f12291a87f77fdff509d7dd16b6014f" target="_blank" rel="noopener"><b><span data-l="ar">العرض التوضيحي للتنفيذ التجريبي</span><span data-l="en">Trial Implementation Demo</span></b><span class="slug">Awesome Screenshot</span></a>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h3 style="font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:10px"><span data-l="ar">مخطط سير العمل (Workflow)</span><span data-l="en">Workflow Diagram</span></h3>
+      <div class="flow">
+
+        <div class="flow-step trig"><b><span data-l="ar">كل يوم أحد — 9:00 صباحاً (توقيت عمّان)</span><span data-l="en">Every Sunday — 9:00 AM (Amman time)</span></b><span class="sub">Schedule Trigger</span></div>
+        <div class="flow-arrow"></div>
+
+        <div class="flow-step"><b><span data-l="ar">جلب البيانات: تبويبات الشيت + قائمة الموظفين + ردود الفورم</span><span data-l="en">Fetch data: sheet tabs + agent list + form responses</span></b><span class="sub">Get Spreadsheet Tabs → Get Agent List → Get Form Responses</span></div>
+        <div class="flow-arrow"></div>
+
+        <div class="flow-step"><b><span data-l="ar">بناء قائمة الموظفين (بأحدث فريق قائد لكل فترة)</span><span data-l="en">Build the employee list (latest Team Lead per period)</span></b><span class="sub">Build Employee List</span></div>
+        <div class="flow-arrow"></div>
+
+        <div class="flow-step"><b><span data-l="ar">البحث عن ملف الموظف في Drive</span><span data-l="en">Search for the employee's sheet in Drive</span></b><span class="sub">Search Employee Sheet in Drive</span></div>
+        <div class="flow-arrow"></div>
+
+        <div class="flow-step flow-decision"><b><span data-l="ar">هل الملف موجود مسبقاً؟</span><span data-l="en">Does the sheet already exist?</span></b><span class="sub">Sheet Exists?</span></div>
+        <div class="flow-arrow"></div>
+        <div class="flow-branches">
+          <div class="flow-branch yes"><div class="tag"><span data-l="ar">نعم</span><span data-l="en">YES</span></div><div class="txt"><span data-l="ar">استخدام الملف الحالي</span><span data-l="en">Use the existing sheet</span></div></div>
+          <div class="flow-branch no"><div class="tag"><span data-l="ar">لا</span><span data-l="en">NO</span></div><div class="txt"><span data-l="ar">إنشاء ملف جديد ونقله لمجلد الموظفين</span><span data-l="en">Create a new sheet &amp; move it to the Agents folder</span></div></div>
+        </div>
+        <div class="flow-merge"><span data-l="ar">↓ يلتقي المساران هنا</span><span data-l="en">↓ both paths merge here</span></div>
+        <div class="flow-arrow"></div>
+
+        <div class="flow-step"><b><span data-l="ar">تحليل الردود + تلخيص الملاحظات بالذكاء الاصطناعي (Gemini)</span><span data-l="en">Parse responses + summarize notes with AI (Gemini)</span></b><span class="sub">Parse Summary &amp; Notes → Summarize Weekly Notes</span></div>
+        <div class="flow-arrow"></div>
+
+        <div class="flow-step flow-decision"><b><span data-l="ar">هل تبويب هذا الأسبوع موجود مسبقاً؟</span><span data-l="en">Does this week's tab already exist?</span></b><span class="sub">Has Existing Week Tab?</span></div>
+        <div class="flow-arrow"></div>
+        <div class="flow-branches">
+          <div class="flow-branch yes"><div class="tag"><span data-l="ar">نعم</span><span data-l="en">YES</span></div><div class="txt"><span data-l="ar">حذف التبويب القديم ثم إنشاؤه من جديد</span><span data-l="en">Delete the old tab, then recreate it</span></div></div>
+          <div class="flow-branch no"><div class="tag"><span data-l="ar">لا</span><span data-l="en">NO</span></div><div class="txt"><span data-l="ar">إنشاء تبويب جديد</span><span data-l="en">Create a new tab</span></div></div>
+        </div>
+        <div class="flow-merge"><span data-l="ar">↓ يلتقي المساران هنا</span><span data-l="en">↓ both paths merge here</span></div>
+        <div class="flow-arrow"></div>
+
+        <div class="flow-step"><b><span data-l="ar">بناء صفوف البيانات وكتابتها + تنسيق الجدول</span><span data-l="en">Build &amp; write the data rows + format the sheet</span></b><span class="sub">Build Snapshot Rows → Write Week Tab Data → Format Week Tab</span></div>
+        <div class="flow-arrow"></div>
+
+        <div class="flow-step flow-decision"><b><span data-l="ar">هل يوجد مراجعات فعلية لهذا الموظف هذا الأسبوع؟</span><span data-l="en">Are there real reviews for this employee this week?</span></b><span class="sub">Has Reviews?</span></div>
+        <div class="flow-arrow"></div>
+        <div class="flow-branches">
+          <div class="flow-branch yes"><div class="tag"><span data-l="ar">نعم</span><span data-l="en">YES</span></div><div class="txt"><span data-l="ar">بناء الرسالة وإرسالها (تلقائي + نسخة المراجعة اليدوية)</span><span data-l="en">Build &amp; send the message (automated + manual-review copy)</span></div></div>
+          <div class="flow-branch no"><div class="tag"><span data-l="ar">لا</span><span data-l="en">NO</span></div><div class="txt"><span data-l="ar">لا يُرسل أي بريد لهذا الموظف</span><span data-l="en">No email is sent for this employee</span></div></div>
+        </div>
+
       </div>
     </div>
   </section>
